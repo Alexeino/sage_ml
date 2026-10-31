@@ -1,0 +1,74 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sage_ml"
+version = "0.1.0"
+description = "Reusable training and evaluation helpers for Hugging Face text classification models."
+authors = [{ name = "Manish" }]
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = [
+    "accelerate>=1.1.0",
+    "datasets",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "scikit-learn",
+    "torch",
+    "transformers>=5",
+]
+
+[tool.setuptools]
+# This directory itself is the `sage_ml` package.
+package-dir = { "sage_ml" = "." }
+packages = ["sage_ml", "sage_ml.train", "sage_ml.evaluate", "sage_ml.view"]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.13",
+    "pandas-stubs",
+    "pytest>=8",
+    "ruff>=0.8",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",  # pycodestyle
+    "F",       # pyflakes
+    "I",       # isort
+    "B",       # bugbear
+    "UP",      # pyupgrade
+    "ANN",     # missing type annotations
+]
+# Any is fine on *args/**kwargs that are passed straight through to a parent class.
+ignore = ["ANN401"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["sage_ml"]
+
+[tool.mypy]
+python_version = "3.10"
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+exclude = ["^\\.venv/"]
+
+[[tool.mypy.overrides]]
+# These libraries ship without type information.
+module = ["datasets.*", "sklearn.*"]
+ignore_missing_imports = true

@@ -1,0 +1,31 @@
+# Virtual environments
+.venv/
+venv/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Packaging / build output
+*.egg-info/
+build/
+dist/
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Training / evaluation output (checkpoints are large; push them to the Hub instead)
+run_*/
+eval_tmp/
+wandb/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Secrets
+.env
